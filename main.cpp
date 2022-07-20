@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 
+#include "colors.h"
 #include "constants.h"
 #include "geometry.h"
 #include "line.h"

@@ -6,13 +6,7 @@
 
 // ====================== USER-DEFINED =========================
 
-const int CANVAS_WIDTH = 200;
-const int CANVAS_HEIGHT = 200;
-
-// ====================== DON'T CHANGE =========================
-
-const TGAColor white = TGAColor(255, 255, 255, 255);
-const TGAColor red   = TGAColor(255, 0,   0,   255);
-const TGAColor green = TGAColor(0,   223, 0,   255);
+extern int CANVAS_WIDTH;
+extern int CANVAS_HEIGHT;
 
 #endif // __CONSTANTS_H_

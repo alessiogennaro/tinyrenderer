@@ -1,6 +1,9 @@
 
 #include "wireframe_renderer.h"
 
+#include <vector>
+
+#include "colors.h"
 #include "constants.h"
 #include "geometry.h"
 #include "line.h"
@@ -12,7 +15,10 @@ void wireframe_renderer(Model const* model, TGAImage& image) {
     for (int i = 0; i < model->nfaces(); i++) {
         std::vector<int> face {model->face(i)};
 
+        // every face is made of three vertices
         for (int j = 0; j < 3; j++) {
+
+            // we draw a line between each of the three vertices
             Vec3f v0 = model->vert(face[j]);
             Vec3f v1 = model->vert(face[(j + 1) % 3]);
 
