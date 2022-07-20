@@ -1,9 +1,11 @@
 
 #include <cmath>
+#include <memory>
 #include <utility>
+#include <vector>
 
-#include "tgaimage.h"
 #include "lesson1.h"
+#include "tgaimage.h"
 
 void line_1a(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 	for (float t = 0.; t < 1.; t = t + 0.01) { // Problem: why 0.01?
@@ -176,4 +178,3 @@ void line_5a(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& co
 	}
 
 }
-
