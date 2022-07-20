@@ -150,6 +150,62 @@ void line_4a(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 
 }
 
+/**
+ * Fifth attempt. Now we get rid of floating points variables
+ */
+void line_5a(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color) {
+	
+	bool steep = false;
+
+	int width  = std::abs(x0 - x1);
+	int height = std::abs(y0 - y1);
+
+	// height > width, the line is steep
+	// the swaps make sure the line is no more steep
+	if (height > width) {
+		std::swap(x0, y0);
+		std::swap(x1, y1);
+		steep = true;
+	}
+
+	// x0 should always preceed x1
+	if (x0 > x1) {
+		std::swap(x0, x1);
+		std::swap(y0, y1);
+	}
+
+	int dx = x1 - x0; // width
+	int dy = y1 - y0; // height
+
+	int derror = std::abs(dy) * 2;
+	int error = 0;
+	int y = y0;
+	const int yincr = (y1 > y0? 1 : -1);
+
+	// let's draw
+	for (int x = x0; x <= x1; x++) {
+		
+		// we replaced x and y coordinates
+		if (steep) {
+			// now it's fine
+			image.set(y, x, color);
+		} else {
+			image.set(x, y, color);
+		}
+
+		error = error + derror;
+		
+		// each time error is greater than one pixel,
+		// we increase (or decrease) y by one,
+		// and decrease the error by one as well
+		if (error > dx) {
+			y = y + yincr;
+			error = error - (dx * 2);
+		}
+	}
+
+}
+
 
 int main(int argc, char** argv) {
 	
@@ -159,9 +215,9 @@ int main(int argc, char** argv) {
 	/* -------------------------------------------------------------- */
 
 	// TODO: add boundary checks to final version of line fun
-	line_4a(13, 20, 80, 40, image, white); 
-	line_4a(20, 13, 40, 80, image, red); 
-	line_4a(80, 40, 13, 20, image, red);
+	line_5a(13, 20, 80, 40, image, white); 
+	line_5a(20, 13, 40, 80, image, red); 
+	line_5a(80, 40, 13, 20, image, red);
 	
 	/* -------------------------------------------------------------- */
 
