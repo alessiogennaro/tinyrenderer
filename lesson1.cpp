@@ -2,7 +2,6 @@
 #include <cmath>
 #include <memory>
 #include <utility>
-#include <vector>
 
 #include "lesson1.h"
 #include "tgaimage.h"

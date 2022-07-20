@@ -1,6 +1,7 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -18,6 +19,9 @@ template <class t> struct Vec2 {
 	inline Vec2<t> operator -(const Vec2<t> &V) const { return Vec2<t>(u-V.u, v-V.v); }
 	inline Vec2<t> operator *(float f)          const { return Vec2<t>(u*f, v*f); }
 	template <class > friend std::ostream& operator<<(std::ostream& s, Vec2<t>& v);
+	template <class > friend void swap(Vec2& a, Vec2& b) { using std::swap; swap(a.u, b.u); swap(a.v, b.v); }
+	inline bool operator ==(const Vec2<t> &V) { return u == V.u && v == V.v; }
+	inline bool operator !=(const Vec2<t> &V) { return !(*this == V); }
 };
 
 template <class t> struct Vec3 {
@@ -44,12 +48,12 @@ typedef Vec3<float> Vec3f;
 typedef Vec3<int>   Vec3i;
 
 template <class t> std::ostream& operator<<(std::ostream& s, const Vec2<t>& v) {
-	s << "(" << v.x << ", " << v.y << ")\n";
+	s << "(" << v.x << ", " << v.y << ")";
 	return s;
 }
 
 template <class t> std::ostream& operator<<(std::ostream& s, const Vec3<t>& v) {
-	s << "(" << v.x << ", " << v.y << ", " << v.z << ")\n";
+	s << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 	return s;
 }
 
