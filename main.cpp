@@ -1,27 +1,48 @@
 
 #include <cmath>
+#include <memory>
 #include <utility>
+#include <vector>
 
 #include "constants.h"
-#include "tgaimage.h"
+#include "geometry.h"
 #include "line.h"
-#include "lesson1.h"
+#include "model.h"
+#include "tgaimage.h"
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red   = TGAColor(255, 0,   0,   255);
+std::unique_ptr<Model> model {};
 
 
 int main(int argc, char** argv) {
 	
+	if (argc == 2) {
+		model = std::make_unique<Model>(argv[1]);
+	} else {
+		model = std::make_unique<Model>("obj/african_head.obj");
+	}
+
 	TGAImage image(CANVAS_WIDTH, CANVAS_HEIGHT, TGAImage::RGB);
-	// image.set(52, 41, red);
 
 	/* -------------------------------------------------------------- */
 
-	// TODO: add boundary checks to final version of line fun
-	line_5a(13, 20, 80, 40, image, white); 
-	line_5a(20, 13, 40, 80, image, red); 
-	line_5a(80, 40, 13, 20, image, red);
+	for (int i = 0; i < model->nfaces(); i++) {
+		std::vector<int> face {model->face(i)};
+
+		for (int j = 0; j < 3; j++) {
+			Vec3f v0 = model->vert(face[j]);
+			Vec3f v1 = model->vert(face[(j + 1) % 3]);
+
+			int x0 = (v0.x + 1.) * (CANVAS_WIDTH / 2.0);
+			int y0 = (v0.y + 1.) * (CANVAS_HEIGHT / 2.0);
+
+			int x1 = (v1.x + 1.) * (CANVAS_WIDTH / 2.0);
+			int y1 = (v1.y + 1.) * (CANVAS_HEIGHT / 2.0);
+
+			line(x0, y0, x1, y1, image, white);
+		}
+	}
 	
 	/* -------------------------------------------------------------- */
 
