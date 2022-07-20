@@ -6,8 +6,8 @@
 
 // ====================== USER-DEFINED =========================
 
-const int CANVAS_WIDTH = 800;
-const int CANVAS_HEIGHT = 800;
+const int CANVAS_WIDTH = 200;
+const int CANVAS_HEIGHT = 200;
 
 // ====================== DON'T CHANGE =========================
 
