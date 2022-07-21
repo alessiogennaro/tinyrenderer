@@ -27,21 +27,20 @@ int main(int argc, char** argv) {
 		model = std::make_unique<Model>("obj/african_head.obj");
 	}
 
-	TGAImage image(CANVAS_WIDTH, CANVAS_HEIGHT, TGAImage::RGB);
+	TGAImage canvas(CANVAS_WIDTH, CANVAS_HEIGHT, TGAImage::RGB);
 
 	/* -------------------------------------------------------------- */
 
 
 	Vec3f light_vec(0, 0, -1);
-
-	triangle_renderer(model.get(), image, light_vec);
+	triangle_renderer(model.get(), canvas, light_vec);
 
 
 	/* -------------------------------------------------------------- */
 
-	// i want to have the origin at the left bottom corner of the image
-	image.flip_vertically();
-	image.write_tga_file("output.tga");
+	// i want to have the origin at the left bottom corner of the canvas
+	canvas.flip_vertically();
+	canvas.write_tga_file("output.tga");
 	
 	return 0;
 }

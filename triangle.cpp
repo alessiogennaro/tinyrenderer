@@ -27,7 +27,14 @@ Vec3f barycentric(const std::array<Vec2i, 3>& pts, Vec2i P) {
         pts[1][1] - pts[0][1],
         pts[0][1] - P[1]
     };
+    /*
+     * pts and P both have integer value as coordinates
+     * so |u.z| < 1 means |u.z| == 0
+     * that means the triangle is degenerate
+     * and so we return something with negative coordinates
+     */
     if (std::abs(u.z) < 1) return Vec3f{-1, 1, 1};
+    
     return Vec3f{1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z};
 }
 

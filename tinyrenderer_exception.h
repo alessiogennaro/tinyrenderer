@@ -5,29 +5,23 @@
 #include <exception>
 #include <string>
 
-// TODO
 
-class tinyrenderer_exception
-{
+class tinyrenderer_exception: public std::exception {
 private:
-    /* data */
+    std::string err;
+
 public:
-    tinyrenderer_exception(/* args */);
-    ~tinyrenderer_exception();
+    tinyrenderer_exception(const std::string& e);
+    ~tinyrenderer_exception() = default;
 
     const char * what () const noexcept;
 };
 
-tinyrenderer_exception::tinyrenderer_exception(/* args */)
-{
-}
-
-tinyrenderer_exception::~tinyrenderer_exception()
-{
-}
+tinyrenderer_exception::tinyrenderer_exception(const std::string& e): err(e)
+{}
 
 const char * tinyrenderer_exception::what() const noexcept {
-    return "";
+    return err.c_str();
 }
 
 #endif // __TINYRENDERER_EXCEPTION_H__
