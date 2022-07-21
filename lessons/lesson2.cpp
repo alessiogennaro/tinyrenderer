@@ -12,9 +12,9 @@
 
 
 void triangle(const Vec2i& t0, const Vec2i& t1, const Vec2i& t2, TGAImage& image, const TGAColor& color) {
-    line(t0.x, t0.y, t1.x, t1.y, image, green);
-    line(t1.x, t1.y, t2.x, t2.y, image, green);
-    line(t2.x, t2.y, t0.x, t0.y, image, red); 
+    line(t0.x, t0.y, t1.x, t1.y, image, color);
+    line(t1.x, t1.y, t2.x, t2.y, image, color);
+    line(t2.x, t2.y, t0.x, t0.y, image, color); 
 }
 
 void filled_triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image, const TGAColor& color) {
