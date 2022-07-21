@@ -12,9 +12,9 @@
 
 
 void triangle(const Vec2i& t0, const Vec2i& t1, const Vec2i& t2, TGAImage& image, const TGAColor& color) {
-    line(t0, t1, image, color);
-    line(t1, t2, image, color);
-    line(t2, t0, image, color);
+    line(t0.x, t0.y, t1.x, t1.y, image, green);
+    line(t1.x, t1.y, t2.x, t2.y, image, green);
+    line(t2.x, t2.y, t0.x, t0.y, image, red); 
 }
 
 void filled_triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image, const TGAColor& color) {
@@ -28,9 +28,9 @@ void filled_triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image, const TGACol
 
     assert(t2.y > t1.y && t1.y > t0.y && t2.y > t0.y);
 
-    // line(t0, t1, image, green); // boundary B
-    // line(t1, t2, image, green); // boundary B
-    // line(t2, t0, image, red);   // boundary A: between the highest and lowest point
+    // line(t0.x, t0.y, t1.x, t1.y, image, green); // boundary B
+    // line(t1.x, t1.y, t2.x, t2.y, image, green); // boundary B
+    // line(t2.x, t2.y, t0.x, t0.y, image, red);   // boundary A: between the highest and lowest point
 
     int total_height = t2.y - t0.y;
 

@@ -11,9 +11,4 @@
  */
 void line(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color);
 
-/**
- * Bresenham algorithm. Draws a line between t0 and t1.
- */
-void line(const Vec2i& t0, const Vec2i& t1, TGAImage& image, const TGAColor& color);
-
 #endif // __LINE_H__

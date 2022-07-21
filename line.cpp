@@ -4,6 +4,8 @@
 #include <utility>
 
 #include "line.h"
+#include "tgaimage.h"
+
 
 void line(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color) {
 
@@ -48,8 +50,3 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color
 	}
 
 }
-
-void line(const Vec2i& t0, const Vec2i& t1, TGAImage& image, const TGAColor& color) {
-	line(t0.x, t0.y, t1.x, t1.y, image, color);
-}
-
