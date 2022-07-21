@@ -16,7 +16,7 @@ $(DESTDIR)$(TARGET): $(OBJECTS)
 	convert $(DESTDIR)output.tga $(DESTDIR)output.png
 
 $(OBJECTS): %.o: %.cpp
-	$(SYSCONF_LINK) -Wall $(CPPFLAGS) -c $(CFLAGS) $< -o $@
+	$(SYSCONF_LINK) -Wall -Wextra $(CPPFLAGS) -c $(CFLAGS) $< -o $@
 
 clean:
 	-rm -f $(OBJECTS)

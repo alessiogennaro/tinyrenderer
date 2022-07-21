@@ -2,8 +2,6 @@
 #ifndef __WIREFRAME_RENDERER_H__
 #define __WIREFRAME_RENDERER_H__
 
-#include "geometry.h"
-#include "line.h"
 #include "model.h"
 #include "tgaimage.h"
 
