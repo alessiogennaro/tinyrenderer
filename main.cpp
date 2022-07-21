@@ -10,6 +10,7 @@
 #include "geometry.h"
 #include "line.h"
 #include "model.h"
+#include "random.h"
 #include "tgaimage.h"
 #include "triangle.h"
 #include "wireframe_renderer.h"
@@ -43,9 +44,28 @@ int main(int argc, char** argv) {
 	filled_triangle(t2[0], t2[1], t2[2], image, green);
 	*/
 
+	/*
 	std::array<Vec2i, 3> pts = {Vec2i(10,10), Vec2i(100, 30), Vec2i(190, 160)};
 	filled_triangle(pts, image, red);
+	*/
 
+	for (int i = 0; i < model->nfaces(); i++) {
+		std::vector<int> face = model->face(i);
+		std::array<Vec2i, 3> screen_coords {};
+		for (int j = 0; j < 3; j++) {
+			Vec3f world_coords = model->vert( face[j] );
+			screen_coords[j] = Vec2i{
+				(world_coords.x + 1.) * CANVAS_WIDTH / 2.,
+				(world_coords.y + 1.) * CANVAS_HEIGHT / 2.
+			};
+		}
+		filled_triangle(screen_coords, image, TGAColor(
+			deterministic::random_int(0, 255),
+			deterministic::random_int(0, 255),
+			deterministic::random_int(0, 255),
+			255
+		) );
+	}
 
 	/* -------------------------------------------------------------- */
 
