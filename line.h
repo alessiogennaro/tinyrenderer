@@ -7,7 +7,6 @@
 
 /**
  * Bresenham algorithm. Draws a line between (x0, y0) and (x1, y1).
- * TODO: add boundary checks, we don't want to draw outside of the canvas
  */
 void line(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color);
 

@@ -3,11 +3,18 @@
 #include <iostream>
 #include <utility>
 
+#include "constants.h"
 #include "line.h"
 #include "tgaimage.h"
+#include "tinyrenderer_exception.h"
 
 
 void line(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color) {
+
+	if (x0 < 0 || x0 > CANVAS_WIDTH - 1 || x1 < 0 || x1 > CANVAS_WIDTH - 1
+	 || y0 < 0 || y0 > CANVAS_HEIGHT - 1 || y1 < 0 || y1 > CANVAS_HEIGHT - 1) {
+		throw tinyrenderer_exception("Can't draw a line outside of canvas!");
+	}
 
 	bool steep = false;
 
