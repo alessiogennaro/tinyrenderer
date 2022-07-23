@@ -7,7 +7,7 @@
 #include "tgaimage.h"
 
 /**
- * Implements backface-culling and goudard shading
+ * Implements back-face culling and Gouraud shading
  */
 void triangle_renderer(Model const* model, TGAImage& image, Vec3f light_vec);
 
