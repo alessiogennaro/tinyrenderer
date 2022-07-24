@@ -96,7 +96,11 @@ void triangle(const std::array<Vec3f, 3>& pts, float* z_buffer, TGAImage& image,
 }
 
 Vec3f world2screen(Vec3f v) {
-    return Vec3f(int((v.x+1.)*CANVAS_WIDTH/2.+.5), int((v.y+1.)*CANVAS_HEIGHT/2.+.5), v.z);
+    return Vec3f{
+		int((v.x + 1.) * CANVAS_WIDTH / 2. + .5),
+		int((v.y + 1.) * CANVAS_HEIGHT / 2. + .5),
+		v.z
+	};
 }
 
 
@@ -127,50 +131,8 @@ int main(int argc, char** argv) {
 	line(10, 10, 790, 10, canvas, white);
 	*/
 
-	/*
-	std::unique_ptr<float[]> z_buffer {new float[CANVAS_WIDTH * CANVAS_HEIGHT]};
-	for (int i = 0; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
-		z_buffer[i] = MIN_FLOAT;
-	}
-	*/
-
-	/*
 	float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
-    for (int i = CANVAS_WIDTH * CANVAS_HEIGHT; i--; z_buffer[i] = MIN_FLOAT);
-
-	for (int i = 0; i < model->nfaces(); i++) {
-		
-        std::vector<int>     face {model->face(i)};
-		std::array<Vec3f, 3> screen_coords {};
-		std::array<Vec3f, 3> world_coords {};
-
-		for (int j = 0; j < 3; j++) {
-			Vec3f v = model->vert( face[j] );
-			screen_coords[j] = Vec3f{
-				.5 + (v.x + 1.) * CANVAS_WIDTH / 2.,
-				.5 + (v.y + 1.) * CANVAS_HEIGHT / 2.,
-				v.z
-			};
-			world_coords[j] = v;
-		}
-		
-		Vec3f n = (world_coords[2] - world_coords[0])^(world_coords[1] - world_coords[0]);
-		n.normalize();
-
-        float intensity = n * light_vec;
-
-		if (intensity > 0.) {
-			int color = intensity * 255;
-			triangle(screen_coords, z_buffer, canvas,
-				TGAColor(color, color, color, 255)
-			);
-		}
-	
-    }
-	*/
-
-	float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
-    for (int i = CANVAS_WIDTH * CANVAS_HEIGHT;  i >= 0; i--) {
+    for (int i = CANVAS_WIDTH * CANVAS_HEIGHT; i >= 0; i--) {
 		z_buffer[i] = -MAX_FLOAT;
 	}
 
