@@ -43,6 +43,9 @@ template <class T> struct Vec3 {
 	float norm () const { return std::sqrt(x*x+y*y+z*z); }
 	Vec3<T> & normalize(T l = 1) { *this = (*this)*(l/norm()); return *this; }
 	template <class > friend std::ostream& operator<<(std::ostream& s, Vec3<T>& v);
+	template <class > friend void swap(Vec3& a, Vec3& b) { using std::swap; swap(a.x, b.x); swap(a.y, b.y); swap(a.z, b.z); }
+	inline bool operator ==(const Vec3<T> &V) { return x == V.x && y == V.y && z == V.z; }
+	inline bool operator !=(const Vec3<T> &V) { return !(*this == V); }
 };
 
 typedef Vec2<float> Vec2f;

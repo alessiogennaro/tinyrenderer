@@ -1,6 +1,5 @@
 
 #include <cmath>
-#include <iostream>
 #include <utility>
 
 #include "constants.h"
