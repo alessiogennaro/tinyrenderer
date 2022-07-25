@@ -117,20 +117,6 @@ int main(int argc, char** argv) {
 
 	/* -------------------------------------------------------------- */
 
-	/*
-	TGAImage render(CANVAS_WIDTH, 16, TGAImage::RGB);
-	int y_buffer[CANVAS_WIDTH];
-
-	for (int i = 0; i < CANVAS_WIDTH; i++) {
-		y_buffer[i] = std::numeric_limits<int>::min();
-	}
-
-	rasterize( 20,  34, 744, 400, render, red,   y_buffer);
-	rasterize(120, 434, 444, 400, render, green, y_buffer);
-	rasterize(330, 463, 594, 200, render, blue,  y_buffer);
-	line(10, 10, 790, 10, canvas, white);
-	*/
-
 	float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
     for (int i = CANVAS_WIDTH * CANVAS_HEIGHT; i >= 0; i--) {
 		z_buffer[i] = -MAX_FLOAT;
