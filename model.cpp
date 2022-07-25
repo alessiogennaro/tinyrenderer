@@ -5,7 +5,7 @@
 #include <vector>
 #include "model.h"
 
-Model::Model(const char *filename) : verts_(), faces_(), uv_(), norms_() {
+Model::Model(const char *filename) : verts_(), faces_(), uv_(), norms_(), diffusemap_() {
     std::ifstream in;
     in.open (filename, std::ifstream::in);
     if (in.fail()) return;
@@ -66,7 +66,7 @@ Vec3f Model::vert(int i) const {
     return verts_[i];
 }
 
-void load_texture(std::string filename, std::string suffix, TGAImage& image) {
+void Model::load_texture(std::string filename, std::string suffix, TGAImage& image) {
     std::string textfile(filename);
     std::size_t dot = textfile.find_last_of(".");
     if (dot != std::string::npos) {

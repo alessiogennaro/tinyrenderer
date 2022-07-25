@@ -19,8 +19,23 @@ bool outside(const Vec3f& barycentric);
 Vec3f barycentric(const std::array<Vec2i, 3>& pts, Vec2i P);
 
 /**
+ * Returns the barycentic coordinates of the triangle pts and the point P
+ */
+Vec3f barycentric(const std::array<Vec3f, 3>& pts, Vec3f P);
+
+/**
  * Draws a triangle and then fills it with color
  */
 void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& color);
+
+/**
+ * Draws a triangle and then fills it with color
+ */
+void triangle(const std::array<Vec3f, 3>& pts, float* z_buffer, TGAImage& image, const TGAColor& color);
+
+/**
+ * Converts world coords to screen coords
+ */
+Vec3f world2screen(Vec3f v);
 
 #endif // __TRIANGLE_H__
