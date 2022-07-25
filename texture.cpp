@@ -39,7 +39,7 @@ Texture::Texture(const char *texture, const char *obj): texture_() {
             text_verts_.push_back(vt);
         }
     }
-    std::cerr << " f# "  << faces_.size() << " vt# " << text_verts_.size() << std::endl;
+    std::cerr << "#TEXTURE f# "  << faces_.size() << " vt# " << text_verts_.size() << std::endl;
 }
 
 Texture::~Texture() {
@@ -60,6 +60,14 @@ int Texture::ntextverts() const {
 Vec2f Texture::text_vert(int i) const {
     return text_verts_[i];
 }
+
+Vec2f Texture::text_vert_scaled(int i) const {
+    Vec2f vert = text_vert(i);
+    vert.u = vert.u * CANVAS_WIDTH;
+    vert.v = vert.v * CANVAS_HEIGHT;
+    return vert;
+}
+
 std::vector<int> Texture::face(int idx) const {
     return faces_[idx];
 }

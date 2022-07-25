@@ -12,6 +12,7 @@
 #include "geometry.h"
 #include "line.h"
 #include "model.h"
+#include "texture.h"
 #include "tgaimage.h"
 #include "triangle_renderer.h"
 #include "triangle.h"
@@ -23,6 +24,7 @@
 float MIN_FLOAT = std::numeric_limits<float>::min();
 float MAX_FLOAT = std::numeric_limits<float>::max();
 std::unique_ptr<Model> model {};
+std::unique_ptr<Texture> texture {};
 Vec3f light_vec(0, 0, -1);
 
 
@@ -107,10 +109,12 @@ Vec3f world2screen(Vec3f v) {
 
 int main(int argc, char** argv) {
 	
-	if (argc == 2) {
+	if (argc == 3) {
 		model = std::make_unique<Model>(argv[1]);
+		texture = std::make_unique<Texture>(argv[2], argv[1]);
 	} else {
 		model = std::make_unique<Model>("obj/african_head.obj");
+		texture = std::make_unique<Texture>("obj/african_head_diffuse.tga", "obj/african_head.obj");
 	}
 
 	TGAImage canvas(CANVAS_WIDTH, CANVAS_HEIGHT, TGAImage::RGB);

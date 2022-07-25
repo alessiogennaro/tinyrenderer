@@ -3,6 +3,7 @@
 #define __TEXTURE_H__
 
 #include <vector>
+#include "constants.h"
 #include "geometry.h"
 #include "tgaimage.h"
 
@@ -18,6 +19,7 @@ public:
     int nfaces() const;
     int ntextverts() const;
     Vec2f text_vert(int i) const;
+    Vec2f text_vert_scaled(int i) const;
     std::vector<int> face(int idx) const;
 };
 
