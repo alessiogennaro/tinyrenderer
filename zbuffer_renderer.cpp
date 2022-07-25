@@ -14,7 +14,7 @@
 #include "triangle.h"
 
 void zbuffer_renderer(Model const* model, TGAImage& image, Vec3f light_vec) {
-    	float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
+    float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
     for (int i = CANVAS_WIDTH * CANVAS_HEIGHT; i >= 0; i--) {
 		z_buffer[i] = -MAX_FLOAT;
 	}
