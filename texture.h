@@ -16,6 +16,7 @@ public:
     Texture(const char *texture, const char *obj);
     ~Texture();
     TGAImage texture() const;
+    TGAColor get_color(int x, int y);
     int nfaces() const;
     int ntextverts() const;
     Vec2f text_vert(int i) const;

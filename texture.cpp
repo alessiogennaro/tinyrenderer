@@ -49,6 +49,10 @@ TGAImage Texture::texture() const {
     return texture_;
 }
 
+TGAColor Texture::get_color(int x, int y) {
+    return texture_.get(x, y);
+}
+
 int Texture::nfaces() const {
     return (int)faces_.size();
 }
