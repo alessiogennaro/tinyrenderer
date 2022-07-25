@@ -8,5 +8,6 @@
 
 extern int CANVAS_WIDTH;
 extern int CANVAS_HEIGHT;
+extern int COLOR_DEPTH;
 
 #endif // __CONSTANTS_H_

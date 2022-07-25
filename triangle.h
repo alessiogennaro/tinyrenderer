@@ -6,6 +6,7 @@
 
 #include "geometry.h"
 #include "line.h"
+#include "model.h"
 #include "tgaimage.h"
 
 /**
@@ -27,6 +28,11 @@ Vec3f barycentric(const std::array<Vec3f, 3>& pts, Vec3f P);
  * Draws a triangle and then fills it with color
  */
 void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& color);
+
+/**
+ * Draws a triangle and then fills it with color
+ */
+void triangle(std::array<Vec3i, 3> t, std::array<Vec2i, 3> uv, TGAImage& image, float intensity, int* z_buffer, Model *model);
 
 /**
  * Draws a triangle and then fills it with color

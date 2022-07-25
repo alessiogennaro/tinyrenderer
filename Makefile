@@ -1,5 +1,6 @@
 SYSCONF_LINK = g++
-CPPFLAGS     =
+# CPPFLAGS     = -Wall -Wextra -Werror=narrowing -Weffc++ -Werror -std=c++17
+CPPFLAGS     = 
 LDFLAGS      =
 LIBS         = -lm
 
@@ -11,12 +12,13 @@ OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 all: $(DESTDIR)$(TARGET)
 
 $(DESTDIR)$(TARGET): $(OBJECTS)
-	$(SYSCONF_LINK) -Wall $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
+	$(SYSCONF_LINK) $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
 	$(DESTDIR)$(TARGET)
-	convert $(DESTDIR)output.tga $(DESTDIR)output.png
+	convert $(DESTDIR)output.tga  $(DESTDIR)output.png
+	convert $(DESTDIR)zbuffer.tga $(DESTDIR)zbuffer.png
 
 $(OBJECTS): %.o: %.cpp
-	$(SYSCONF_LINK) -Wall -Wextra $(CPPFLAGS) -c $(CFLAGS) $< -o $@
+	$(SYSCONF_LINK) $(CPPFLAGS) -c $(CFLAGS) $< -o $@
 
 clean:
 	-rm -f $(OBJECTS)

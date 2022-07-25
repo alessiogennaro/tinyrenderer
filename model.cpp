@@ -18,24 +18,24 @@ Model::Model(const char *filename) : verts_(), faces_(), uv_(), norms_(), diffus
         if (!line.compare(0, 2, "v ")) {
             iss >> ctrash;
             Vec3f v;
-            for (int i = 0; i < 3; i++) iss >> v.raw[i];
+            for (int i = 0; i < 3; i++) iss >> v[i];
             verts_.push_back(v);
         } else if (!line.compare(0, 3, "vt ")) {
             iss >> ctrash >> ctrash;
             Vec2f uv;
-            for (int i = 0; i < 2; i++) iss >> uv.raw[i];
+            for (int i = 0; i < 2; i++) iss >> uv[i];
             uv_.push_back(uv);
         } else if (!line.compare(0, 3, "vn ")) {
             iss >> ctrash >> ctrash;
             Vec3f n;
-            for (int i = 0; i < 3; i++) iss >> n.raw[i];
+            for (int i = 0; i < 3; i++) iss >> n[i];
             norms_.push_back(n);
         } else if (!line.compare(0, 2, "f ")) {
             iss >> ctrash;
             std::vector<Vec3i> f;
             Vec3i temp;
-            while (iss >> temp.raw[0] >> ctrash >> temp.raw[1] >> ctrash >> temp.raw[2]) {
-                for (int i = 0; i < 3; i++) temp.raw[i]--;
+            while (iss >> temp[0] >> ctrash >> temp[1] >> ctrash >> temp[2]) {
+                for (int i = 0; i < 3; i++) temp[i]--;
                 f.push_back(temp);
             }
             faces_.push_back(f);
@@ -58,7 +58,7 @@ int Model::nfaces() const {
 
 std::vector<int> Model::face(int idx) const {
     std::vector<int> face;
-    for (int i = 0; i < (int)faces_[idx].size(); i++) face.push_back(faces_[idx][i][0]);
+    for (int i = 0; i < (int)faces_[idx].size(); i++) face.push_back(faces_[idx][i].x);
     return face;
 }
 
@@ -79,7 +79,7 @@ void Model::load_texture(std::string filename, std::string suffix, TGAImage& ima
 }
 
 TGAColor Model::diffuse(Vec2i uv) {
-    return diffusemap_.get(uv.u, uv.v);
+    return diffusemap_.get(uv.x, uv.y);
 }
 
 Vec2i Model::uv(int iface, int nvert) {

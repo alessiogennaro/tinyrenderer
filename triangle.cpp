@@ -8,6 +8,7 @@
 #include "geometry.h"
 #include "line.h"
 #include "math_constants.h"
+#include "model.h"
 #include "tgaimage.h"
 #include "triangle.h"
 
@@ -86,6 +87,58 @@ void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& 
             image.set(P.x, P.y, color);
         }
     }
+}
+
+void triangle(std::array<Vec3i, 3> t, std::array<Vec2i, 3> uv, TGAImage& image, float intensity, int* z_buffer, Model *model) {
+    
+    Vec3i& t0  =  t[0];  Vec3i& t1  =  t[1];  Vec3i& t2  =  t[2];
+    Vec2i& uv0 = uv[0];  Vec2i& uv1 = uv[1];  Vec2i& uv2 = uv[2];
+
+    if (t0.y == t1.y && t0.y == t2.y) return;
+
+    if (t0.y > t1.y) { std::swap(t0, t1); std::swap(uv0, uv1); }
+    if (t0.y > t2.y) { std::swap(t0, t2); std::swap(uv0, uv2); }
+    if (t1.y > t2.y) { std::swap(t1, t2); std::swap(uv1, uv2); }
+
+    int total_height = t2.y - t0.y;
+
+    for (int i = 0; i < total_height; i++) {
+
+    	bool second_half = (i > t1.y - t0.y || t1.y == t0.y);
+    	int segment_height = second_half?  t2.y - t1.y  :  t1.y - t0.y;
+
+    	float alpha = (float) i / total_height;
+    	float beta  = (float) (i - (second_half? t1.y - t0.y : 0)) / segment_height;
+
+    	Vec3i   A =  t0 + Vec3f(t2 - t0) * alpha;
+    	Vec3i   B = second_half?  t1 + Vec3f(t2 - t1) * beta :  t0 + Vec3f(t1 - t0) * beta;
+    	Vec2i uvA = uv0 +    (uv2 - uv0) * alpha;
+    	Vec2i uvB = second_half? uv1 +    (uv2 - uv1) * beta : uv0 +    (uv1 - uv0) * beta;
+
+    	if (A.x > B.x) {
+    		std::swap(A, B); std::swap(uvA, uvB);
+    	}
+
+    	for (int j = A.x; j <= B.x; j++) {
+    		float phi = (B.x == A.x)?  1.  :  (float) (j - A.x) / (float) (B.x - A.x);
+
+    		Vec3i   P = Vec3f(A) + Vec3f(B - A) * phi;
+    		Vec2i uvP =     uvA  +  (uvB - uvA) * phi;
+    		int idx = P.x + P.y * CANVAS_WIDTH;
+
+    		if (z_buffer[idx] < P.z) {
+    			z_buffer[idx] = P.z;
+    			TGAColor color = model->diffuse(uvP);
+
+    			image.set(P.x, P.y, TGAColor(color.r * intensity,
+				                             color.g * intensity,
+    						 				 color.b * intensity)
+    			);
+    		}
+    	}
+
+    }
+
 }
 
 void triangle(const std::array<Vec3f, 3>& pts, float* z_buffer, TGAImage& image, const TGAColor& color) {
