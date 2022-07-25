@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
 		z_buffer[i] = -MAX_FLOAT;
 	}
 
-	for (int i=0; i<model->nfaces(); i++) {
+	for (int i = 0; i < model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
         std::array<Vec3f, 3> pts {};
 		std::array<Vec3f, 3> world_coords {};

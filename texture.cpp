@@ -9,6 +9,7 @@
 
 Texture::Texture(const char *texture, const char *obj): texture_() {
     bool res = texture_.read_tga_file(texture);
+    texture_.flip_vertically();
     if (!res) return;
     
     std::ifstream in;
