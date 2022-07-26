@@ -1,6 +1,4 @@
 
-#include "triangle_renderer.h"
-
 #include <array>
 #include <vector>
 
@@ -10,7 +8,9 @@
 #include "line.h"
 #include "model.h"
 #include "tgaimage.h"
+#include "triangle_renderer.h"
 #include "triangle.h"
+
 
 
 void triangle_renderer(Model const* model, TGAImage& image, Vec3f light_vec) {    

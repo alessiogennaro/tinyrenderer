@@ -3,6 +3,7 @@
 
 #include <fstream>
 
+
 #pragma pack(push,1)
 struct TGA_Header {
     char idlength;

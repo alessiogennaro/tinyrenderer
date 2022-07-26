@@ -1,9 +1,12 @@
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
+
 #include "model.h"
+
 
 Model::Model(const char *filename) : verts_(), faces_(), uv_(), norms_(), diffusemap_() {
     std::ifstream in;

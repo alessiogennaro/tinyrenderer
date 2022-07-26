@@ -1,6 +1,4 @@
 
-#include "zbuffer_renderer.h"
-
 #include <array>
 #include <vector>
 
@@ -12,6 +10,8 @@
 #include "model.h"
 #include "tgaimage.h"
 #include "triangle.h"
+#include "zbuffer_renderer.h"
+
 
 void zbuffer_renderer(Model const* model, TGAImage& image, Vec3f light_vec) {
     float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];

@@ -1,6 +1,4 @@
 
-#include "wireframe_renderer.h"
-
 #include <vector>
 
 #include "colors.h"
@@ -9,6 +7,7 @@
 #include "line.h"
 #include "model.h"
 #include "tgaimage.h"
+#include "wireframe_renderer.h"
 
 
 void wireframe_renderer(Model const* model, TGAImage& image) {

@@ -6,6 +6,7 @@
 #include "model.h"
 #include "tgaimage.h"
 
+
 /**
  * Implements back-face culling and Gouraud shading
  */
