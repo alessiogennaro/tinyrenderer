@@ -42,21 +42,21 @@ Vec3f barycentric(const std::array<Vec2i, 3>& pts, Vec2i P) {
 }
 
 Vec3f barycentric(const std::array<Vec3f, 3>& pts, Vec3f P) {
-	Vec3f s[2];
-	
-	for (int i = 2; i--;) {
-		s[i][0] = pts[2][i] - pts[0][i];
-		s[i][1] = pts[1][i] - pts[0][i];
-		s[i][2] = pts[0][i] - P[i];
-	}
-	
-	Vec3f u = s[0] ^ s[1];
-	
-	if (std::abs(u.z) > 1e-2) {
-		return Vec3f{1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z};
-	} else {
-		return Vec3f{-1, 1, 1};
-	}
+    Vec3f s[2];
+    
+    for (int i = 2; i--;) {
+        s[i][0] = pts[2][i] - pts[0][i];
+        s[i][1] = pts[1][i] - pts[0][i];
+        s[i][2] = pts[0][i] - P[i];
+    }
+    
+    Vec3f u = s[0] ^ s[1];
+    
+    if (std::abs(u.z) > 1e-2) {
+        return Vec3f{1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z};
+    } else {
+        return Vec3f{-1, 1, 1};
+    }
 }
 
 void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& color) {
@@ -104,78 +104,78 @@ void triangle(std::array<Vec3i, 3> t, std::array<Vec2i, 3> uv, TGAImage& image, 
 
     for (int i = 0; i < total_height; i++) {
 
-    	bool second_half = (i > t1.y - t0.y || t1.y == t0.y);
-    	int segment_height = second_half?  t2.y - t1.y  :  t1.y - t0.y;
+        bool second_half = (i > t1.y - t0.y || t1.y == t0.y);
+        int segment_height = second_half?  t2.y - t1.y  :  t1.y - t0.y;
 
-    	float alpha = (float) i / total_height;
-    	float beta  = (float) (i - (second_half? t1.y - t0.y : 0)) / segment_height;
+        float alpha = (float) i / total_height;
+        float beta  = (float) (i - (second_half? t1.y - t0.y : 0)) / segment_height;
 
-    	Vec3i   A =  t0 + Vec3f(t2 - t0) * alpha;
-    	Vec3i   B = second_half?  t1 + Vec3f(t2 - t1) * beta :  t0 + Vec3f(t1 - t0) * beta;
-    	Vec2i uvA = uv0 +    (uv2 - uv0) * alpha;
-    	Vec2i uvB = second_half? uv1 +    (uv2 - uv1) * beta : uv0 +    (uv1 - uv0) * beta;
+        Vec3i   A =  t0 + Vec3f(t2 - t0) * alpha;
+        Vec3i   B = second_half?  t1 + Vec3f(t2 - t1) * beta :  t0 + Vec3f(t1 - t0) * beta;
+        Vec2i uvA = uv0 +    (uv2 - uv0) * alpha;
+        Vec2i uvB = second_half? uv1 +    (uv2 - uv1) * beta : uv0 +    (uv1 - uv0) * beta;
 
-    	if (A.x > B.x) {
-    		std::swap(A, B); std::swap(uvA, uvB);
-    	}
+        if (A.x > B.x) {
+            std::swap(A, B); std::swap(uvA, uvB);
+        }
 
-    	for (int j = A.x; j <= B.x; j++) {
-    		float phi = (B.x == A.x)?  1.  :  (float) (j - A.x) / (float) (B.x - A.x);
+        for (int j = A.x; j <= B.x; j++) {
+            float phi = (B.x == A.x)?  1.  :  (float) (j - A.x) / (float) (B.x - A.x);
 
-    		Vec3i   P = Vec3f(A) + Vec3f(B - A) * phi;
-    		Vec2i uvP =     uvA  +  (uvB - uvA) * phi;
-    		int idx = P.x + P.y * CANVAS_WIDTH;
+            Vec3i   P = Vec3f(A) + Vec3f(B - A) * phi;
+            Vec2i uvP =     uvA  +  (uvB - uvA) * phi;
+            int idx = P.x + P.y * CANVAS_WIDTH;
 
-    		if (z_buffer[idx] < P.z) {
-    			z_buffer[idx] = P.z;
-    			TGAColor color = model->diffuse(uvP);
+            if (z_buffer[idx] < P.z) {
+                z_buffer[idx] = P.z;
+                TGAColor color = model->diffuse(uvP);
 
-    			image.set(P.x, P.y, TGAColor(color.r * intensity,
-				                             color.g * intensity,
-    						 				 color.b * intensity)
-    			);
-    		}
-    	}
+                image.set(P.x, P.y, TGAColor(color.r * intensity,
+                                             color.g * intensity,
+                                              color.b * intensity)
+                );
+            }
+        }
 
     }
 
 }
 
 void triangle(const std::array<Vec3f, 3>& pts, float* z_buffer, TGAImage& image, const TGAColor& color) {
-	Vec2f bbox_min(MAX_FLOAT, MAX_FLOAT);
-	Vec2f bbox_max(MIN_FLOAT, MIN_FLOAT);
-	Vec2f clamp(image.get_width() - 1, image.get_height() - 1);
+    Vec2f bbox_min(MAX_FLOAT, MAX_FLOAT);
+    Vec2f bbox_max(MIN_FLOAT, MIN_FLOAT);
+    Vec2f clamp(image.get_width() - 1, image.get_height() - 1);
 
-	for (std::size_t i = 0; i < pts.size(); i++) {
-		for (std::size_t j = 0; j < 2; j++) {
-			bbox_min[j] = std::max(0.f,      std::min(bbox_min[j], pts[i][j]));
-			bbox_max[j] = std::min(clamp[j], std::max(bbox_max[j], pts[i][j]));
-		}
-	}
+    for (std::size_t i = 0; i < pts.size(); i++) {
+        for (std::size_t j = 0; j < 2; j++) {
+            bbox_min[j] = std::max(0.f,      std::min(bbox_min[j], pts[i][j]));
+            bbox_max[j] = std::min(clamp[j], std::max(bbox_max[j], pts[i][j]));
+        }
+    }
 
-	Vec3f P {};
+    Vec3f P {};
 
-	for (P.x = bbox_min.x; P.x <= bbox_max.x; P.x++) {
-		for (P.y = bbox_min.y; P.y <= bbox_max.y; P.y++) {
+    for (P.x = bbox_min.x; P.x <= bbox_max.x; P.x++) {
+        for (P.y = bbox_min.y; P.y <= bbox_max.y; P.y++) {
 
-			Vec3f barycentric_canvas = barycentric(pts, P);
-			if (outside(barycentric_canvas)) continue;
-			P.z = 0;
-			for (std::size_t j = 0; j < 3; j++) {
-				P.z = P.z + (pts[j][2] * barycentric_canvas[j]);
-			}
-			if (z_buffer[ int(P.x + P.y * CANVAS_WIDTH) ] < P.z) {
-				z_buffer[ int(P.x + P.y * CANVAS_WIDTH) ] = P.z;
-				image.set(P.x, P.y, color);
-			}
-		}
-	}
+            Vec3f barycentric_canvas = barycentric(pts, P);
+            if (outside(barycentric_canvas)) continue;
+            P.z = 0;
+            for (std::size_t j = 0; j < 3; j++) {
+                P.z = P.z + (pts[j][2] * barycentric_canvas[j]);
+            }
+            if (z_buffer[ int(P.x + P.y * CANVAS_WIDTH) ] < P.z) {
+                z_buffer[ int(P.x + P.y * CANVAS_WIDTH) ] = P.z;
+                image.set(P.x, P.y, color);
+            }
+        }
+    }
 }
 
 Vec3f world2screen(Vec3f v) {
     return Vec3f{
-		int((v.x + 1.) * CANVAS_WIDTH / 2. + .5),
-		int((v.y + 1.) * CANVAS_HEIGHT / 2. + .5),
-		v.z
-	};
+        int((v.x + 1.) * CANVAS_WIDTH / 2. + .5),
+        int((v.y + 1.) * CANVAS_HEIGHT / 2. + .5),
+        v.z
+    };
 }
