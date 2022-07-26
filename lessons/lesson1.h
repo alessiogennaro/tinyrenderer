@@ -4,6 +4,7 @@
 
 #include "../tgaimage.h"
 
+
 /**
  * First attempt at drawing a line between (x0, y0) and (x1, y1)
  */

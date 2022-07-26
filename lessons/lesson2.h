@@ -8,6 +8,7 @@
 #include "../line.h"
 #include "../tgaimage.h"
 
+
 /**
  * Draws a triangle using t0, t1 and t2 as vertices
  */

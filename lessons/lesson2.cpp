@@ -1,10 +1,9 @@
 
-#include "lesson2.h"
-
 #include <array>
 #include <cassert>
 #include <utility>
 
+#include "lesson2.h"
 #include "../colors.h"
 #include "../geometry.h"
 #include "../line.h"

@@ -21,6 +21,7 @@
 	line(10, 10, 790, 10, canvas, white);
 */
 
+
 void rasterize(int x0, int y0, int x1, int y1, TGAImage& image, const TGAColor& color, int y_buffer[]);
 
 #endif // __LESSON3_H__
