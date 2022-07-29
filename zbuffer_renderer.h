@@ -11,6 +11,6 @@
  * Implements a zbuffer
  * 
  */
-void zbuffer_renderer(Model const* model, TGAImage& image, Vec3f light_vec);
+void zbuffer_renderer(Model* model, TGAImage& image, Vec3f light_vec);
 
 #endif // __ZBUFFER_RENDERER_H__

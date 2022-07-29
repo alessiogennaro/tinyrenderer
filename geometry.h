@@ -1,8 +1,10 @@
+
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 
 template <class t> struct Vec2 {
@@ -64,7 +66,7 @@ template <> template <> Vec3<int>::Vec3(const Vec3<float> &v);
 template <> template <> Vec3<float>::Vec3(const Vec3<int> &v);
 
 
-template <class t> std::ostream& operator<<(std::ostream& s, Vec2<t>& v) {
+template <class t> std::ostream& operator<<(std::ostream &s, Vec2<t> &v) {
     s << "(" << v.x << ", " << v.y << ")\n";
     return s;
 }
@@ -73,5 +75,31 @@ template <class t> std::ostream& operator<<(std::ostream& s, Vec3<t>& v) {
     s << "(" << v.x << ", " << v.y << ", " << v.z << ")\n";
     return s;
 }
+
+
+/* ---- MATRICES ---- */
+
+const int DEFAULT_ALLOC = 4;
+
+class Matrix {
+    // by row
+    std::vector<std::vector<float> > m_;
+    int rows_, cols_;
+
+public:
+    Matrix(int r = DEFAULT_ALLOC, int c = DEFAULT_ALLOC);
+
+    inline int nrows() const;
+    inline int ncols() const;
+
+    static Matrix identity(int dimensions);
+    std::vector<float>& operator[](const int i);
+    const std::vector<float>& operator[](const int i) const;
+    Matrix operator*(const Matrix& a);
+    Matrix transpose();
+    Matrix inverse();
+
+    friend std::ostream& operator<< (std::ostream& s, Matrix& m);
+};
 
 #endif //__GEOMETRY_H__

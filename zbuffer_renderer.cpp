@@ -1,5 +1,6 @@
 
 #include <array>
+#include <memory>
 #include <vector>
 
 #include "colors.h"
@@ -13,32 +14,50 @@
 #include "zbuffer_renderer.h"
 
 
-void zbuffer_renderer(Model const* model, TGAImage& image, Vec3f light_vec) {
-    float* z_buffer = new float[CANVAS_WIDTH * CANVAS_HEIGHT];
-    for (int i = CANVAS_WIDTH * CANVAS_HEIGHT; i >= 0; i--) {
-        z_buffer[i] = -MAX_FLOAT;
+void zbuffer_renderer(Model* model, TGAImage& image, Vec3f light_vec) {
+    
+    auto z_buffer = std::make_unique<int[]>(CANVAS_WIDTH * CANVAS_HEIGHT);
+    for (int i {0}; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
+        z_buffer[i] = MIN_INT;
     }
 
     for (int i = 0; i < model->nfaces(); i++) {
-        std::vector<int> face = model->face(i);
-        std::array<Vec3f, 3> pts {};
-        std::array<Vec3f, 3> world_coords {};
-        
+        std::vector<int> face {model->face(i)};
+        std::array<Vec3i, 3> screen_coords {};
+        std::array<Vec3f, 3> world_coords  {};
+
         for (int j = 0; j < 3; j++) {
-            pts[j] = world2screen(model->vert( face[j] ));
-            world_coords[j] = model->vert( face[j] );
+            Vec3f v = model->vert( face[j] );
+
+            screen_coords[j] = Vec3i{
+                (v.x + 1.) * CANVAS_WIDTH / 2.,
+                (v.y + 1.) * CANVAS_HEIGHT / 2.,
+                (v.z + 1.) * COLOR_DEPTH / 2.
+            };
+            world_coords[j] = v;
         }
+
         Vec3f n = (world_coords[2] - world_coords[0])^(world_coords[1] - world_coords[0]);
         n.normalize();
 
         float intensity = n * light_vec;
 
         if (intensity > 0.) {
-            int color = intensity * 255;
-            triangle(pts, z_buffer, image, TGAColor(color, color, color, 255));
+            std::array<Vec2i, 3> uv;
+            for (int k {0}; k < (int) uv.size(); k++) {
+                uv[k] = model->uv(i, k);
+            }
+            triangle(screen_coords, uv, image, intensity, z_buffer.get(), model);
         }
-
     }
 
-    delete[] z_buffer;
+    TGAImage zbimage(CANVAS_WIDTH, CANVAS_HEIGHT, TGAImage::GRAYSCALE);
+    
+    for (int i = 0; i < CANVAS_WIDTH; i++) {
+        for (int j = 0; j < CANVAS_HEIGHT; j++) {
+            zbimage.set(i, j, TGAColor(z_buffer[i + j * CANVAS_WIDTH], 1));
+        }
+    }
+    zbimage.flip_vertically();
+    zbimage.write_tga_file("zbuffer.tga");
 }
