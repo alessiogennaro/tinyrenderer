@@ -37,21 +37,21 @@ Vec3f barycentric(const std::array<Vec2i, 3>& pts, Vec2i P) {
      * and so we return something with negative coordinates
      */
     if (std::abs(u.z) < 1) return Vec3f{-1, 1, 1};
-    
+
     return Vec3f{1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z};
 }
 
 Vec3f barycentric(const std::array<Vec3f, 3>& pts, Vec3f P) {
     Vec3f s[2];
-    
+
     for (int i = 2; i--;) {
         s[i][0] = pts[2][i] - pts[0][i];
         s[i][1] = pts[1][i] - pts[0][i];
         s[i][2] = pts[0][i] - P[i];
     }
-    
+
     Vec3f u = s[0] ^ s[1];
-    
+
     if (std::abs(u.z) > 1e-2) {
         return Vec3f{1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z};
     } else {
@@ -69,7 +69,7 @@ void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& 
             std::max(0, std::min(bbox_min.x, pts.at(i).x));
         bbox_min.y =
             std::max(0, std::min(bbox_min.y, pts.at(i).y));
-        
+
         bbox_max.x =
             std::min(clamp.x, std::max(bbox_max.x, pts.at(i).x));
         bbox_max.y =
@@ -90,8 +90,8 @@ void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& 
 }
 
 void triangle(std::array<Vec3i, 3> t, std::array<Vec2i, 3> uv, TGAImage& image, float intensity, int* z_buffer, Model *model) {
-    
-    Vec3i& t0  =  t[0];  Vec3i& t1  =  t[1];  Vec3i& t2  =  t[2];
+
+    Vec3i&  t0 =  t[0];  Vec3i&  t1 =  t[1];  Vec3i&  t2 =  t[2];
     Vec2i& uv0 = uv[0];  Vec2i& uv1 = uv[1];  Vec2i& uv2 = uv[2];
 
     if (t0.y == t1.y && t0.y == t2.y) return;

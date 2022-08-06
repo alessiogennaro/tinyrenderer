@@ -6,6 +6,7 @@
 
 #include "tgaimage.h"
 
+
 // ====================== COLORS =========================
 
 const TGAColor white = TGAColor(255, 255, 255, 255);

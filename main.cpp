@@ -9,7 +9,6 @@
 #include "colors.h"
 #include "constants.h"
 #include "geometry.h"
-#include "line.h"
 #include "math_constants.h"
 #include "model.h"
 #include "projection_renderer.h"
@@ -37,7 +36,7 @@ int main(int argc, char** argv) {
     /* -------------------------------------------------------------- */
 
 
-    projection_renderer(model.get(), canvas, light_vec, camera);
+    projection_renderer(model.get(), canvas, light_vec, camera);      
 
 
     /* -------------------------------------------------------------- */

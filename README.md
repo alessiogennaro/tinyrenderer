@@ -1,3 +1,3 @@
 # Tinyrenderer
 
-A simple software renderer to learn the basics of OpenGL.
+A simple software renderer to learn how OpenGL works.

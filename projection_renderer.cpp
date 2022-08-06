@@ -15,8 +15,8 @@
 
 
 Vec3f matrix2vec(const Matrix& m) {
-    const float& z = m[3][0];
-    const float& u = m[0][0], v = m[1][0], w = m[2][0];
+    float z = m[3][0];
+    float u = m[0][0], v = m[1][0], w = m[2][0];
 
     return Vec3f{u / z, v / z, w / z};
 }
@@ -53,12 +53,14 @@ void projection_renderer(Model* model, TGAImage& image, Vec3f light_vec, Vec3f c
     }
 
     Matrix Projection = Matrix::identity(4);
-    Matrix ViewPort   = viewport(
+    
+    Matrix ViewPort = viewport(
         CANVAS_WIDTH / 8,
         CANVAS_HEIGHT / 8,
         CANVAS_WIDTH * 3/4,
         CANVAS_HEIGHT * 3/4
     );
+    
     Projection[3][2] = -1.f / camera.z;
 
     for (int i = 0; i < model->nfaces(); i++) {
