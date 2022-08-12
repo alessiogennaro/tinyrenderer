@@ -64,7 +64,7 @@ void triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGAColor& 
     Vec2i bbox_max(0, 0);
     Vec2i clamp(image.get_width() - 1, image.get_height() - 1);
 
-    for (std::size_t i = 0; i < pts.size(); i++) {
+    for (int i = 0; i < (int) pts.size(); i++) {
         bbox_min.x =
             std::max(0, std::min(bbox_min.x, pts.at(i).x));
         bbox_min.y =
@@ -130,9 +130,9 @@ void triangle(std::array<Vec3i, 3> t, std::array<Vec2i, 3> uv, TGAImage& image, 
                 z_buffer[idx] = P.z;
                 TGAColor color = model->diffuse(uvP);
 
-                image.set(P.x, P.y, TGAColor(color.r * intensity,
-                                             color.g * intensity,
-                                              color.b * intensity)
+                image.set(P.x, P.y, TGAColor(color.bgra[2] * intensity,
+                                             color.bgra[1] * intensity,
+                                              color.bgra[0] * intensity)
                 );
             }
         }
@@ -146,8 +146,8 @@ void triangle(const std::array<Vec3f, 3>& pts, float* z_buffer, TGAImage& image,
     Vec2f bbox_max(MIN_FLOAT, MIN_FLOAT);
     Vec2f clamp(image.get_width() - 1, image.get_height() - 1);
 
-    for (std::size_t i = 0; i < pts.size(); i++) {
-        for (std::size_t j = 0; j < 2; j++) {
+    for (int i = 0; i < (int) pts.size(); i++) {
+        for (int j = 0; j < 2; j++) {
             bbox_min[j] = std::max(0.f,      std::min(bbox_min[j], pts[i][j]));
             bbox_max[j] = std::min(clamp[j], std::max(bbox_max[j], pts[i][j]));
         }

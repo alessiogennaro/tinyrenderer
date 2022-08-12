@@ -4,10 +4,9 @@
 
 #include "tgaimage.h"
 
-// ====================== USER-DEFINED =========================
 
 extern int CANVAS_WIDTH;
 extern int CANVAS_HEIGHT;
-extern int COLOR_DEPTH;
+extern int Z_BUFFER_DEPTH;
 
 #endif // __CONSTANTS_H_

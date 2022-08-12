@@ -6,6 +6,11 @@
 
 #include "geometry.h"
 
+template <> Vec3<float>::Vec3(Matrix m):
+    x(m[0][0] / m[3][0]),
+    y(m[1][0] / m[3][0]),
+    z(m[2][0] / m[3][0])
+{}
 
 template <> template <> Vec3<int>::Vec3<>(const Vec3<float> &v) : x(int(v.x + .5)), y(int(v.y + .5)), z(int(v.z + .5)) {
 }
@@ -14,11 +19,17 @@ template <> template <> Vec3<float>::Vec3<>(const Vec3<int> &v) : x(v.x), y(v.y)
 }
 
 
-/* ---- MATRICES ---- */
+
 
 Matrix::Matrix(int r, int c): rows_(r), cols_(c),
     m_(std::vector<std::vector<float> >(r, std::vector<float>(c, 0.f)))
 {}
+
+Matrix::Matrix(Vec3f v): rows_(4), cols_(1), m_(std::vector<std::vector<float> >(4, std::vector<float>(1, 0.f))) {
+    m_[0][0] = v.x;
+    m_[1][0] = v.y;
+    m_[2][0] = v.z;
+}
 
 inline int Matrix::nrows() const { return rows_; }
 inline int Matrix::ncols() const { return cols_; }

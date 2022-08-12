@@ -32,23 +32,28 @@ Matrix vec2matrix(const Vec3f& v) {
     return m;
 }
 
+//     [ w/2   0    0  x + w/2 ]
+//     [  0   h/2   0  y + h/2 ]
+//     [  0    0   d/2   d/2   ]
+//     [  0    0    0    1     ]
+
 Matrix viewport(int x, int y, int w, int h) {
     Matrix m = Matrix::identity(4);
 
     m[0][3] = x + (w / 2.f);
     m[1][3] = y + (h / 2.f);
-    m[2][3] = COLOR_DEPTH / 2.f;
+    m[2][3] = Z_BUFFER_DEPTH / 2.f;
 
     m[0][0] = w / 2.f;
     m[1][1] = h / 2.f;
-    m[2][2] = COLOR_DEPTH / 2.f;
+    m[2][2] = Z_BUFFER_DEPTH / 2.f;
 
     return m;
 }
 
 void projection_renderer(Model* model, TGAImage& image, Vec3f light_vec, Vec3f camera) {
     auto z_buffer = std::make_unique<int[]>(CANVAS_WIDTH * CANVAS_HEIGHT);
-    for (int i {0}; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
+    for (int i = 0; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
         z_buffer[i] = MIN_INT;
     }
 
@@ -82,7 +87,7 @@ void projection_renderer(Model* model, TGAImage& image, Vec3f light_vec, Vec3f c
 
         if (intensity > 0.) {
             std::array<Vec2i, 3> uv;
-            for (int k {0}; k < (int) uv.size(); k++) {
+            for (int k = 0; k < (int) uv.size(); k++) {
                 uv[k] = model->uv(i, k);
             }
             triangle(screen_coords, uv, image, intensity, z_buffer.get(), model);
@@ -93,7 +98,7 @@ void projection_renderer(Model* model, TGAImage& image, Vec3f light_vec, Vec3f c
     
     for (int i = 0; i < CANVAS_WIDTH; i++) {
         for (int j = 0; j < CANVAS_HEIGHT; j++) {
-            zbimage.set(i, j, TGAColor(z_buffer[i + j * CANVAS_WIDTH], 1));
+            zbimage.set(i, j, TGAColor(z_buffer[i + j * CANVAS_WIDTH]));
         }
     }
     zbimage.flip_vertically();

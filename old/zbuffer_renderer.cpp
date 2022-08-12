@@ -17,7 +17,7 @@
 void zbuffer_renderer(Model* model, TGAImage& image, Vec3f light_vec) {
     
     auto z_buffer = std::make_unique<int[]>(CANVAS_WIDTH * CANVAS_HEIGHT);
-    for (int i {0}; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
+    for (int i = 0; i < CANVAS_WIDTH * CANVAS_HEIGHT; i++) {
         z_buffer[i] = MIN_INT;
     }
 
@@ -32,7 +32,7 @@ void zbuffer_renderer(Model* model, TGAImage& image, Vec3f light_vec) {
             screen_coords[j] = Vec3i{
                 (v.x + 1.) * CANVAS_WIDTH / 2.,
                 (v.y + 1.) * CANVAS_HEIGHT / 2.,
-                (v.z + 1.) * COLOR_DEPTH / 2.
+                (v.z + 1.) * Z_BUFFER_DEPTH / 2.
             };
             world_coords[j] = v;
         }
@@ -44,7 +44,7 @@ void zbuffer_renderer(Model* model, TGAImage& image, Vec3f light_vec) {
 
         if (intensity > 0.) {
             std::array<Vec2i, 3> uv;
-            for (int k {0}; k < (int) uv.size(); k++) {
+            for (int k = 0; k < (int) uv.size(); k++) {
                 uv[k] = model->uv(i, k);
             }
             triangle(screen_coords, uv, image, intensity, z_buffer.get(), model);

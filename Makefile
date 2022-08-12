@@ -1,7 +1,6 @@
 SYSCONF_LINK = g++
-# CPPFLAGS     = -Wall -Wextra -Werror=narrowing -Weffc++ -Werror -std=c++17
-CPPFLAGS     = 
-LDFLAGS      =
+CPPFLAGS     = -g
+LDFLAGS      = -g
 LIBS         = -lm
 
 DESTDIR = ./
@@ -16,6 +15,9 @@ $(DESTDIR)$(TARGET): $(OBJECTS)
 	$(DESTDIR)$(TARGET)
 	convert $(DESTDIR)output.tga  $(DESTDIR)output.png
 	convert $(DESTDIR)zbuffer.tga $(DESTDIR)zbuffer.png
+
+build: $(OBJECTS)
+	$(SYSCONF_LINK) $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
 
 $(OBJECTS): %.o: %.cpp
 	$(SYSCONF_LINK) $(CPPFLAGS) -c $(CFLAGS) $< -o $@

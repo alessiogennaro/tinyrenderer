@@ -7,6 +7,8 @@
 #include <vector>
 
 
+class Matrix;
+
 template <class t> struct Vec2 {
     t x, y;
 
@@ -34,6 +36,8 @@ template <class t> struct Vec3 {
 
     Vec3<t>() : x(t()), y(t()), z(t()) { }
     Vec3<t>(t _x, t _y, t _z) : x(_x), y(_y), z(_z) {}
+    
+    Vec3<t>(Matrix m);
     template <class u> Vec3<t>(const Vec3<u> &v);
     Vec3<t>(const Vec3<t> &v) : x(t()), y(t()), z(t()) { *this = v; }
     
@@ -62,6 +66,7 @@ typedef Vec2<int>   Vec2i;
 typedef Vec3<float> Vec3f;
 typedef Vec3<int>   Vec3i;
 
+// template <> Vec3<float>::Vec3(Matrix m);
 template <> template <> Vec3<int>::Vec3(const Vec3<float> &v);
 template <> template <> Vec3<float>::Vec3(const Vec3<int> &v);
 
@@ -77,7 +82,7 @@ template <class t> std::ostream& operator<<(std::ostream& s, Vec3<t>& v) {
 }
 
 
-/* ---- MATRICES ---- */
+
 
 const int DEFAULT_ALLOC = 4;
 
@@ -88,6 +93,7 @@ class Matrix {
 
 public:
     Matrix(int r = DEFAULT_ALLOC, int c = DEFAULT_ALLOC);
+    Matrix(Vec3f v);
 
     inline int nrows() const;
     inline int ncols() const;

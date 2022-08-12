@@ -94,7 +94,7 @@ void filled_triangle(const std::array<Vec2i, 3>& pts, TGAImage& image, const TGA
     Vec2i bbox_max(0, 0);
     Vec2i clamp(image.get_width() - 1, image.get_height() - 1);
 
-    for (std::size_t i = 0; i < pts.size(); i++) {
+    for (int i = 0; i < (int) pts.size(); i++) {
         bbox_min.x =
             std::max(0, std::min(bbox_min.x, pts.at(i).x));
         bbox_min.y =
